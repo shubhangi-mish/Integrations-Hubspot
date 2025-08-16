@@ -1,70 +1,117 @@
-# Getting Started with Create React App
+# Integrations Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React application for managing various integrations with a beautiful login system and dashboard interface.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Secure Login System**: Professional login page with test credentials
+- **Integration Management**: Connect and manage HubSpot, Notion, and Airtable integrations
+- **Modern UI**: Material-UI components with beautiful gradients and animations
+- **Responsive Design**: Works on all device sizes
+- **Real-time Data**: View and manage your integration data
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js (v14 or higher)
+- npm or yarn
 
-### `npm test`
+### Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Install dependencies:
+```bash
+npm install
+```
 
-### `npm run build`
+2. Start the development server:
+```bash
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Login Credentials
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Demo Account:**
+- **Username**: `TestUser`
+- **Password**: `TestPassword`
 
-### `npm run eject`
+## App Flow
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Login Page**: Enter credentials to access the dashboard
+2. **Dashboard**: Main interface with integration management
+3. **Integrations**: Connect to various services (HubSpot, Notion, Airtable)
+4. **Data View**: View and manage your integration data
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Available Integrations
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### HubSpot
+- OAuth 2.0 authentication
+- View contacts and companies
+- Timeline events management
+- Real-time data synchronization
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Notion
+- OAuth 2.0 authentication
+- Document and database access
+- Content management
 
-## Learn More
+### Airtable
+- OAuth 2.0 authentication
+- Base and table management
+- Data synchronization
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Project Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+src/
+├── App.js              # Main app with routing
+├── login.js            # Login page component
+├── dashboard.js        # Dashboard with header and navigation
+├── integration-form.js # Main integration management form
+├── integrations/       # Integration-specific components
+│   ├── hubspot.js     # HubSpot integration
+│   ├── notion.js      # Notion integration
+│   └── airtable.js    # Airtable integration
+└── data-form.js       # Data display component
+```
 
-### Code Splitting
+## Technologies Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **React 18**: Modern React with hooks
+- **React Router**: Client-side routing
+- **Material-UI**: Professional UI components
+- **Axios**: HTTP client for API calls
+- **CSS-in-JS**: Styled components with Material-UI
 
-### Analyzing the Bundle Size
+## Development
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Adding New Integrations
 
-### Making a Progressive Web App
+1. Create a new component in `src/integrations/`
+2. Add it to the `integrationMapping` in `integration-form.js`
+3. Implement the required OAuth flow and data fetching
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Styling
 
-### Advanced Configuration
+The app uses Material-UI's `sx` prop for custom styling. All components follow a consistent design system with:
+- Primary color: `#1976d2` (Blue)
+- Secondary color: `#2e7d32` (Green)
+- Background: `#f5f5f5` (Light Gray)
+- Gradients for visual appeal
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Backend Integration
 
-### Deployment
+This frontend connects to a FastAPI backend running on `http://localhost:8000`. Make sure the backend is running before testing integrations.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Troubleshooting
 
-### `npm run build` fails to minify
+- **Login Issues**: Ensure you're using the correct test credentials
+- **Integration Errors**: Check that the backend server is running
+- **OAuth Problems**: Verify your integration app configurations
+- **Data Loading**: Check browser console for API errors
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+
+This project is part of a technical assessment for automation integrations.
