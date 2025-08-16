@@ -19,7 +19,15 @@ HUBSPOT_CONFIG = {
         'crm.objects.contacts.write', 
         'timeline',
         'oauth',
-        'crm.objects.contacts.read'
+        'crm.objects.contacts.read',
+        'crm.objects.companies.read',
+        'crm.objects.companies.write',
+        'crm.objects.deals.write',
+        'crm.objects.deals.read',
+        'crm.objects.invoices.read',
+        'crm.objects.invoices.write',
+        'crm.objects.appointments.read',
+        'crm.objects.appointments.write',
     ]
 }
 

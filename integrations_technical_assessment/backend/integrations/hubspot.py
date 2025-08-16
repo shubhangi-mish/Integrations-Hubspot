@@ -241,6 +241,24 @@ def create_integration_item_metadata_object(
     return integration_item_metadata
 
 
+def create_company_integration_item(
+    company_data: dict
+) -> IntegrationItem:
+    """Creates an IntegrationItem from HubSpot company data"""
+    company_name = company_data.get('properties', {}).get('name', 'Unknown Company')
+    
+    integration_item_metadata = IntegrationItem(
+        id=company_data.get('id'),
+        type='Company',
+        name=company_name,
+        creation_time=company_data.get('createdAt'),
+        last_modified_time=company_data.get('updatedAt'),
+        url=f"https://app.hubspot.com/companies/{company_data.get('id')}"
+    )
+
+    return integration_item_metadata
+
+
 async def get_items_hubspot(credentials) -> list[IntegrationItem]:
     """
     Fetch data from HubSpot using stored credentials
@@ -277,12 +295,29 @@ async def get_items_hubspot(credentials) -> list[IntegrationItem]:
             
             contacts_data = contacts_response.json()
             
+            # Get companies
+            companies_response = await client.get(
+                'https://api.hubapi.com/crm/v3/objects/companies',
+                headers=headers,
+                params={'limit': 100}
+            )
+            
+            if companies_response.status_code != 200:
+                print(f'Warning: Failed to fetch companies. Status: {companies_response.status_code}')
+                companies_data = {'results': []}
+            else:
+                companies_data = companies_response.json()
+            
             # Create integration items
             items = []
             
             # Process contacts using helper function
             for contact in contacts_data.get('results', []):
                 items.append(create_integration_item_metadata_object(contact))
+            
+            # Process companies using helper function
+            for company in companies_data.get('results', []):
+                items.append(create_company_integration_item(company))
             
             print(f'list_of_integration_item_metadata: {items}')
             # Convert IntegrationItem objects to dictionaries for JSON serialization
