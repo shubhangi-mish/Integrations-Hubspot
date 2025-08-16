@@ -16,18 +16,35 @@ HUBSPOT_CONFIG = {
     
     # Scopes for HubSpot API access (using proper HubSpot scope format)
     'SCOPES': [
-        'crm.objects.contacts.write', 
-        'timeline',
+        # Core OAuth and timeline scopes
         'oauth',
+        'timeline',
+        'conversations.read',
+        # CRM Objects - Contacts
         'crm.objects.contacts.read',
+        'crm.objects.contacts.write',
+        
+        # CRM Objects - Companies
         'crm.objects.companies.read',
         'crm.objects.companies.write',
-        'crm.objects.deals.write',
+        
+        # CRM Objects - Deals
         'crm.objects.deals.read',
+        'crm.objects.deals.write',
+        
+        # CRM Objects - Invoices
         'crm.objects.invoices.read',
         'crm.objects.invoices.write',
+        
+        # CRM Objects - Appointments
         'crm.objects.appointments.read',
         'crm.objects.appointments.write',
+        
+        # CRM Objects - Line Items
+        'crm.objects.line_items.read',
+        
+        # CRM Objects - Products
+        'crm.objects.products.read',
     ]
 }
 
