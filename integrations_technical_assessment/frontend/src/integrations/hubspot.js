@@ -85,7 +85,17 @@ export const HubSpotIntegration = ({ user, org, integrationParams, setIntegratio
              if (response.data && Array.isArray(response.data)) {
                  console.log('Setting objects:', response.data);
                  setObjects(response.data);
-                 setEventMessage(`Loaded ${response.data.length} contacts from HubSpot`);
+                 
+                 const contactCount = response.data.filter(obj => obj.type === 'Contact').length;
+                 const companyCount = response.data.filter(obj => obj.type === 'Company').length;
+                 
+                 let message = 'Loaded ';
+                 if (contactCount > 0) message += `${contactCount} contacts`;
+                 if (contactCount > 0 && companyCount > 0) message += ' and ';
+                 if (companyCount > 0) message += `${companyCount} companies`;
+                 message += ' from HubSpot';
+                 
+                 setEventMessage(message);
              } else {
                  console.log('Response data is not an array:', typeof response.data, response.data);
                  setEventMessage('Error: Invalid data format received');
@@ -186,45 +196,95 @@ export const HubSpotIntegration = ({ user, org, integrationParams, setIntegratio
                         
                                                  {objects.length > 0 && (
                              <Box sx={{mt: 2}}>
-                                 <Typography variant="h6" gutterBottom>
-                                     HubSpot Contacts
-                                 </Typography>
-                                 <Box sx={{display: 'flex', flexDirection: 'column', gap: 2}}>
-                                     {objects.map((contact, index) => (
-                                         <Box key={index} sx={{p: 3, border: '1px solid #e0e0e0', borderRadius: 2, bgcolor: '#fafafa', boxShadow: '0 2px 4px rgba(0,0,0,0.1)'}}>
-                                             <Typography variant="h6" sx={{fontWeight: 'bold', color: '#1976d2', mb: 1}}>
-                                                 {contact.name}
-                                             </Typography>
-                                             <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2}}>
-                                                 <Box>
-                                                     <Typography variant="body2" sx={{mb: 0.5}}>
-                                                         <strong>Contact ID:</strong> {contact.id}
+                                 {/* Contacts Section */}
+                                 {objects.filter(obj => obj.type === 'Contact').length > 0 && (
+                                     <Box sx={{mb: 3}}>
+                                         <Typography variant="h6" gutterBottom>
+                                             HubSpot Contacts ({objects.filter(obj => obj.type === 'Contact').length})
+                                         </Typography>
+                                         <Box sx={{display: 'flex', flexDirection: 'column', gap: 2}}>
+                                             {objects.filter(obj => obj.type === 'Contact').map((contact, index) => (
+                                                 <Box key={`contact-${index}`} sx={{p: 3, border: '1px solid #e0e0e0', borderRadius: 2, bgcolor: '#fafafa', boxShadow: '0 2px 4px rgba(0,0,0,0.1)'}}>
+                                                     <Typography variant="h6" sx={{fontWeight: 'bold', color: '#1976d2', mb: 1}}>
+                                                         {contact.name}
                                                      </Typography>
-                                                     <Typography variant="body2" sx={{mb: 0.5}}>
-                                                         <strong>Type:</strong> {contact.type}
-                                                     </Typography>
-                                                     {contact.url && (
-                                                         <Typography variant="body2" sx={{mb: 0.5}}>
-                                                             <strong>HubSpot URL:</strong> <a href={contact.url} target="_blank" rel="noopener noreferrer" style={{color: '#1976d2', textDecoration: 'underline'}}>View in HubSpot</a>
-                                                         </Typography>
-                                                     )}
+                                                     <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2}}>
+                                                         <Box>
+                                                             <Typography variant="body2" sx={{mb: 0.5}}>
+                                                                 <strong>Contact ID:</strong> {contact.id}
+                                                             </Typography>
+                                                             <Typography variant="body2" sx={{mb: 0.5}}>
+                                                                 <strong>Type:</strong> {contact.type}
+                                                             </Typography>
+                                                             {contact.url && (
+                                                                 <Typography variant="body2" sx={{mb: 0.5}}>
+                                                                     <strong>HubSpot URL:</strong> <a href={contact.url} target="_blank" rel="noopener noreferrer" style={{color: '#1976d2', textDecoration: 'underline'}}>View in HubSpot</a>
+                                                                 </Typography>
+                                                             )}
+                                                         </Box>
+                                                         <Box>
+                                                             {contact.creation_time && (
+                                                                 <Typography variant="body2" sx={{mb: 0.5}}>
+                                                                     <strong>Created:</strong> {new Date(contact.creation_time).toLocaleString()}
+                                                                 </Typography>
+                                                             )}
+                                                             {contact.last_modified_time && (
+                                                                 <Typography variant="body2" sx={{mb: 0.5}}>
+                                                                     <strong>Updated:</strong> {new Date(contact.last_modified_time).toLocaleString()}
+                                                                 </Typography>
+                                                             )}
+                                                         </Box>
+                                                     </Box>
                                                  </Box>
-                                                 <Box>
-                                                     {contact.creation_time && (
-                                                         <Typography variant="body2" sx={{mb: 0.5}}>
-                                                             <strong>Created:</strong> {new Date(contact.creation_time).toLocaleString()}
-                                                         </Typography>
-                                                     )}
-                                                     {contact.last_modified_time && (
-                                                         <Typography variant="body2" sx={{mb: 0.5}}>
-                                                             <strong>Updated:</strong> {new Date(contact.last_modified_time).toLocaleString()}
-                                                         </Typography>
-                                                     )}
-                                                 </Box>
-                                             </Box>
+                                             ))}
                                          </Box>
-                                     ))}
-                                 </Box>
+                                     </Box>
+                                 )}
+                                 
+                                 {/* Companies Section */}
+                                 {objects.filter(obj => obj.type === 'Company').length > 0 && (
+                                     <Box>
+                                         <Typography variant="h6" gutterBottom>
+                                             HubSpot Companies ({objects.filter(obj => obj.type === 'Company').length})
+                                         </Typography>
+                                         <Box sx={{display: 'flex', flexDirection: 'column', gap: 2}}>
+                                             {objects.filter(obj => obj.type === 'Company').map((company, index) => (
+                                                 <Box key={`company-${index}`} sx={{p: 3, border: '1px solid #e0e0e0', borderRadius: 2, bgcolor: '#f9f9f9', boxShadow: '0 2px 4px rgba(0,0,0,0.1)'}}>
+                                                     <Typography variant="h6" sx={{fontWeight: 'bold', color: '#2e7d32', mb: 1}}>
+                                                         {company.name}
+                                                     </Typography>
+                                                     <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2}}>
+                                                         <Box>
+                                                             <Typography variant="body2" sx={{mb: 0.5}}>
+                                                                 <strong>Company ID:</strong> {company.id}
+                                                             </Typography>
+                                                             <Typography variant="body2" sx={{mb: 0.5}}>
+                                                                 <strong>Type:</strong> {company.type}
+                                                             </Typography>
+                                                             {company.url && (
+                                                                 <Typography variant="body2" sx={{mb: 0.5}}>
+                                                                     <strong>HubSpot URL:</strong> <a href={company.url} target="_blank" rel="noopener noreferrer" style={{color: '#2e7d32', textDecoration: 'underline'}}>View in HubSpot</a>
+                                                                 </Typography>
+                                                             )}
+                                                         </Box>
+                                                         <Box>
+                                                             {company.creation_time && (
+                                                                 <Typography variant="body2" sx={{mb: 0.5}}>
+                                                                     <strong>Created:</strong> {new Date(company.creation_time).toLocaleString()}
+                                                                 </Typography>
+                                                             )}
+                                                             {company.last_modified_time && (
+                                                                 <Typography variant="body2" sx={{mb: 0.5}}>
+                                                                     <strong>Updated:</strong> {new Date(company.last_modified_time).toLocaleString()}
+                                                                 </Typography>
+                                                             )}
+                                                         </Box>
+                                                     </Box>
+                                                 </Box>
+                                             ))}
+                                         </Box>
+                                     </Box>
+                                 )}
                              </Box>
                          )}
                     </Box>

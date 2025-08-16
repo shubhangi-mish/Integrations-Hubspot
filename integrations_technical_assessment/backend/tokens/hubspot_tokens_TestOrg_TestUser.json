@@ -2,16 +2,24 @@
   "user_id": "TestUser",
   "org_id": "TestOrg",
   "integration": "HubSpot",
-  "created_at": "2025-08-15T14:02:01.300442",
+  "created_at": "2025-08-16T00:37:46.119127",
   "tokens": {
     "token_type": "bearer",
     "refresh_token": "na2-fb70-70bc-44b7-8c62-673f0efa9da1",
-    "access_token": "CM_l2-eKMxIRQlNQMl8kQEwrAgQACAcCFhIY9bKTdCC77KUnKMDTxAgyFKLLYW2Rx_FDln6MOjA6k6Wi9ysoOhpCU1AyXyRATCsCDQAIGQEBBHFOMAEBASU_BUIUOlz19w52Z9rTHQhLrDjgMVXHF_ZKA25hMlIAWgBgAGi77KUncAB4AA",
+    "access_token": "CKz-8_mKMxIZQlNQMl8kQEwrAgwACAcCFhIJIgEBTEcBBBj1spN0ILvspScowNPECDIUpIuX724r0Mfgb5rsRFLqwW9ez6o6ZEJTUDJfJEBMKwIsABAZAQABAAQAcQBOABwAAQABABIAAQABAAEAJQAVAAEAAQABAAEAAQABAAEAAQAiAAEAAQABAAEAAQCSAAEAAQABAAIBAQABAAEAAQABAAEAAQAPAAEAAQBCFIn8cgE98Z-KcynBkLLv4GxUhLX9SgNuYTJSAFoAYABou-ylJ3AAeAA",
     "hub_id": 243587445,
     "scopes": [
-      "timeline",
-      "oauth",
+      "crm.objects.invoices.read",
+      "crm.objects.companies.write",
       "crm.objects.contacts.write",
+      "crm.objects.invoices.write",
+      "crm.objects.appointments.write",
+      "crm.objects.deals.read",
+      "timeline",
+      "crm.objects.companies.read",
+      "crm.objects.deals.write",
+      "crm.objects.appointments.read",
+      "oauth",
       "crm.objects.contacts.read"
     ],
     "expires_in": 1800
